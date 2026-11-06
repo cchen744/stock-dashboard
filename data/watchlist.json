@@ -1,0 +1,74 @@
+[
+ {
+  "ticker": "NVDA",
+  "name": "英伟达",
+  "kind": "个股",
+  "sector": "AI 芯片"
+ },
+ {
+  "ticker": "ANET",
+  "name": "Arista Networks",
+  "kind": "个股",
+  "sector": "数据中心网络"
+ },
+ {
+  "ticker": "MU",
+  "name": "美光",
+  "kind": "个股",
+  "sector": "存储芯片"
+ },
+ {
+  "ticker": "GOOGL",
+  "name": "Alphabet",
+  "kind": "个股",
+  "sector": "互联网/云"
+ },
+ {
+  "ticker": "AAON",
+  "name": "AAON",
+  "kind": "个股",
+  "sector": "暖通/数据中心冷却"
+ },
+ {
+  "ticker": "XOM",
+  "name": "埃克森美孚",
+  "kind": "个股",
+  "sector": "能源"
+ },
+ {
+  "ticker": "GE",
+  "name": "GE Aerospace",
+  "kind": "个股",
+  "sector": "航空发动机"
+ },
+ {
+  "ticker": "MS",
+  "name": "摩根士丹利",
+  "kind": "个股",
+  "sector": "投行/财富管理"
+ },
+ {
+  "ticker": "SANM",
+  "name": "Sanmina",
+  "kind": "个股",
+  "sector": "电子制造/AI 机架"
+ },
+ {
+  "ticker": "FORM",
+  "name": "FormFactor",
+  "kind": "个股",
+  "sector": "半导体测试"
+ },
+ {
+  "ticker": "VTI",
+  "name": "Vanguard 全美股 ETF",
+  "kind": "ETF",
+  "sector": "美股大盘"
+ },
+ {
+  "ticker": "VT",
+  "name": "Vanguard 全球股票 ETF",
+  "kind": "ETF",
+  "sector": "全球股票"
+ }
+]

@@ -1,0 +1,42 @@
+[
+ {
+  "id": "2026-11-06-C",
+  "date": "2026-11-06",
+  "ticker": "C",
+  "name": "花旗集团",
+  "cap": "大盘",
+  "price": 118.45,
+  "call": "买入观察",
+  "reason": "营收十年同期新高，ROTCE 指引上调，前瞻 PE 约 10"
+ },
+ {
+  "id": "2026-11-06-PYPL",
+  "date": "2026-11-06",
+  "ticker": "PYPL",
+  "name": "PayPal",
+  "cap": "大盘",
+  "price": 58.96,
+  "call": "买入观察",
+  "reason": "上调全年 EPS 指引，降本推进，前瞻 PE 约 10"
+ },
+ {
+  "id": "2026-11-06-KMX",
+  "date": "2026-11-06",
+  "ticker": "KMX",
+  "name": "CarMax",
+  "cap": "中小盘",
+  "price": 52.6,
+  "call": "买入观察",
+  "reason": "营收 +19.5%、EPS 大超预期，战略日给出中双位数 EPS 增长目标"
+ },
+ {
+  "id": "2026-11-06-SANM",
+  "date": "2026-11-06",
+  "ticker": "SANM",
+  "name": "Sanmina",
+  "cap": "中盘",
+  "price": 130.23,
+  "call": "买入观察",
+  "reason": "FY26 EPS 指引翻倍、约 11 倍 PE；政策风险高"
+ }
+]

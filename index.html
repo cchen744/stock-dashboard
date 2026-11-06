@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Nora 美股看板</title>
+<meta name="description" content="个人美股看板：关注清单、财报、风险提示、市场展望与低估潜力股">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@400;600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --color-bg: #f6f7f5; --color-panel: #ffffff; --color-fg: #1b1f1d; --color-fg-muted: #5f6763;
+  --color-border-line: #e1e4e0; --color-ok: #17803d; --color-warn: #a86a00; --color-bad: #c43c2f;
+  --cds-surface-popover: #ffffff; --cds-border: #d6dad5; --cds-text-secondary: #5f6763;
+  --cds-shadow-popover: 0 6px 20px rgba(0,0,0,.12);
+  --cds-chart-reference: #b9bfba; --cds-chart-grid: #eceeeb; --cds-chart-axis: #c9cdc8; --cds-chart-muted: #c9cdc8;
+  --font-anthropic-sans: "Noto Sans SC", -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --font-anthropic-serif: "Noto Serif SC", "Songti SC", Georgia, serif;
+  --cds-font-size-caption: .8125rem; --cds-font-size-body: .9375rem; --cds-font-size-heading: 1.125rem; --cds-font-size-title: 1.75rem;
+  --cds-font-weight-medium: 600;
+  --cds-gap-xs: .25rem; --cds-gap-sm: .5rem; --cds-gap-md: .875rem; --cds-gap-lg: 1.25rem; --cds-gap-xl: 2rem;
+  --cds-pad-xs: .25rem; --cds-pad-sm: .5rem; --cds-pad-md: .875rem; --cds-pad-lg: 1.125rem;
+  --cds-radius: 10px; --cds-dur-slow: .3s;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --color-bg: #121514; --color-panel: #1b1f1d; --color-fg: #e8ebe9; --color-fg-muted: #9aa39e;
+    --color-border-line: #2c322f; --color-ok: #4cc276; --color-warn: #e0a339; --color-bad: #ef6b5d;
+    --cds-surface-popover: #232826; --cds-border: #353b38; --cds-text-secondary: #9aa39e;
+    --cds-shadow-popover: 0 6px 20px rgba(0,0,0,.5);
+    --cds-chart-reference: #4a524e; --cds-chart-grid: #262b29; --cds-chart-axis: #3a413d; --cds-chart-muted: #3a413d;
+  }
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: var(--cds-font-size-body); -webkit-text-size-adjust: 100%; }
+#dash-root { padding-block: max(20px, env(safe-area-inset-top)) 40px; padding-left: max(16px, env(safe-area-inset-left)); padding-right: max(16px, env(safe-area-inset-right)); }
+[hidden] { display: none !important; }
+.dash-updated { max-width: 76rem; margin: 0 auto 1rem; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script>
+/* 轻量运行时：替代 claude.ai Dashboard 的 dash API，从 data/*.json 读取数据 */
+(function () {
+  const DATASETS = ['prices','watchlist','market','earnings','risks','outlook','picks','fundamentals','analysts','verdicts','picks_log','pick_rounds'];
+  const store = {}, calcs = {}, draws = {}, cbs = [];
+  let ready = false;
+  const run = () => {
+    if (!ready) return;
+    cbs.forEach((f) => { try { f(); } catch (e) { console.error(e); } });
+    Object.keys(draws).forEach((n) => window.dash.draw(n));
+  };
+  window.dash = {
+    data(id) {
+      if (store[id]) return store[id];
+      if (calcs[id]) {
+        if (!ready) return { status: 'loading', data: [] };
+        try {
+          const ins = calcs[id].inputs.map((i) => window.dash.data(i));
+          if (ins.some((x) => x.status !== 'ok')) return { status: 'loading', data: [] };
+          return { status: 'ok', data: calcs[id].fn(...ins.map((x) => x.data)) };
+        } catch (e) { console.error(id, e); return { status: 'error', data: [], message: String(e) }; }
+      }
+      return { status: ready ? 'missing' : 'loading', data: [] };
+    },
+    calc(id, o) { calcs[id] = o; },
+    loader() {},
+    onData(f) { cbs.push(f); if (ready) f(); },
+    draw(name, fn) {
+      if (fn) { draws[name] = fn; if (!ready) return; }
+      const f = draws[name]; if (!f) return;
+      document.querySelectorAll('[data-draw="' + name + '"]').forEach((el) => { try { f(el); } catch (e) { console.error(name, e); } });
+    },
+    setLink(name) { history.replaceState(null, '', '#' + name); },
+    params() { return {}; }, setParams() {}, resetParams() {}, refresh() {},
+    colors: ['#2f6fdf', '#d9622b', '#2a9d72', '#8a5cd6', '#c4417a', '#b08a17', '#3a9bb8', '#6b7280'],
+  };
+  window.addEventListener('DOMContentLoaded', async () => {
+    const bust = '?t=' + Date.now();
+    await Promise.all(DATASETS.map(async (id) => {
+      try { const r = await fetch('data/' + id + '.json' + bust); store[id] = { status: r.ok ? 'ok' : 'error', data: r.ok ? await r.json() : [] }; }
+      catch (e) { store[id] = { status: 'error', data: [] }; }
+    }));
+    ready = true; run();
+    let t; window.addEventListener('resize', () => { clearTimeout(t); t = setTimeout(run, 150); });
+  });
+})();
+</script>
+</head>
+<body>
+<div id="dash-root">
+<style>
+.nx { font-family: var(--font-anthropic-sans); display: flex; flex-direction: column; gap: var(--cds-gap-xl); max-width: 76rem; margin-inline: auto; }
+.nx-head h1 { font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); margin: 0; }
+.nx-head p { margin: var(--cds-gap-xs) 0 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-body); line-height: 1.6; }
+.nx-head b { color: var(--color-fg); font-variant-numeric: tabular-nums; }
+.nx-nav { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); }
+.nx-nav button { font: inherit; font-size: var(--cds-font-size-caption); padding: var(--cds-pad-xs) var(--cds-pad-sm); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); background: var(--color-panel); color: var(--color-fg); cursor: pointer; }
+.nx-nav button:hover, .nx-nav button:focus-visible { border-color: var(--color-fg-muted); }
+.nx-sec { display: flex; flex-direction: column; gap: var(--cds-gap-md); scroll-margin-top: var(--cds-gap-lg); }
+.nx-sec > h2 { font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); margin: 0; }
+.nx-sec > .nx-note { margin: 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.nx-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; }
+.nx-card h3 { font-size: var(--cds-font-size-body); font-weight: var(--cds-font-weight-medium); margin: 0 0 var(--cds-gap-xs); }
+.nx-up { color: var(--color-ok); }
+.nx-down { color: var(--color-bad); }
+.nx-muted { color: var(--color-fg-muted); }
+.nx-tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr)); gap: var(--cds-gap-md); min-height: 6rem; }
+.nx-tile { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-md); display: flex; flex-direction: column; gap: var(--cds-gap-xs); }
+.nx-tile .lab { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.nx-tile .val { font-family: var(--font-anthropic-serif); font-size: var(--cds-font-size-title); font-variant-numeric: tabular-nums; }
+.nx-tile .sub { font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.nx-tablewrap { overflow-x: auto; }
+.nx-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-body); font-variant-numeric: tabular-nums; }
+.nx-table th { text-align: left; font-weight: var(--cds-font-weight-medium); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); padding: var(--cds-pad-xs) var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.nx-table th button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+.nx-table td { padding: var(--cds-pad-sm); border-bottom: 1px solid var(--color-border-line); vertical-align: top; }
+.nx-table .num { text-align: right; }
+.nx-table td.tk { font-weight: var(--cds-font-weight-medium); }
+@media (max-width: 40rem) { .nx-hide-sm { display: none; } }
+.nx-spark { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: var(--cds-gap-md); min-height: 8rem; }
+.nx-sp { position: relative; background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-sm) var(--cds-pad-md); }
+.nx-sp .t { display: flex; justify-content: space-between; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.nx-sp svg { display: block; }
+.nx-tip { position: absolute; pointer-events: none; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); border-radius: var(--cds-radius); box-shadow: var(--cds-shadow-popover); padding: var(--cds-pad-xs) var(--cds-pad-sm); font-size: var(--cds-font-size-caption); white-space: nowrap; font-variant-numeric: tabular-nums; z-index: 2; }
+.nx-tip .d { color: var(--cds-text-secondary); }
+.nx-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); gap: var(--cds-gap-md); }
+.nx-list { display: flex; flex-direction: column; gap: var(--cds-gap-md); min-height: 6rem; }
+.nx-item { display: flex; flex-direction: column; gap: var(--cds-gap-xs); line-height: 1.6; }
+.nx-item .hd { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--cds-gap-sm); }
+.nx-item .ttl { font-weight: var(--cds-font-weight-medium); }
+.nx-item .meta { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.nx-item p { margin: 0; font-size: var(--cds-font-size-body); }
+.nx-pill { font-size: var(--cds-font-size-caption); padding: 0 var(--cds-pad-sm); border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.nx-pill.hi { color: var(--color-bad); }
+.nx-pill.mid { color: var(--color-warn); }
+.nx-pill.lo { color: var(--color-fg-muted); }
+.nx-pill.bull { color: var(--color-ok); }
+.nx-item .insight { color: var(--color-fg-muted); }
+.nx-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: var(--cds-gap-md); min-height: 8rem; }
+.nx-kv { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); font-variant-numeric: tabular-nums; }
+.nx-kv b { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.nx-take { margin: 0; line-height: 1.7; font-size: var(--cds-font-size-body); }
+.nx-foot summary { cursor: pointer; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.nx-foot p { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.6; }
+.nx-src { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); display: flex; flex-wrap: wrap; gap: 0 var(--cds-gap-sm); }
+.nx-src a { color: var(--color-fg-muted); text-decoration: underline; text-underline-offset: 2px; }
+.nx-src a:hover, .nx-src a:focus-visible { color: var(--color-fg); }
+.nx-tile .nx-src { margin-top: auto; }
+.nx-an { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); font-variant-numeric: tabular-nums; }
+.nx-an td { padding: var(--cds-pad-xs) var(--cds-pad-xs) var(--cds-pad-xs) 0; border-top: 1px solid var(--color-border-line); vertical-align: top; }
+.nx-an td.r { text-align: right; white-space: nowrap; }
+.nx-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); gap: var(--cds-gap-sm); }
+.nx-metrics div { display: flex; flex-direction: column; }
+.nx-metrics .k { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.nx-metrics .v { font-variant-numeric: tabular-nums; font-weight: var(--cds-font-weight-medium); }
+.nx-gloss dl { display: grid; grid-template-columns: minmax(7rem, max-content) 1fr; gap: var(--cds-gap-xs) var(--cds-gap-md); margin: var(--cds-gap-sm) 0 0; font-size: var(--cds-font-size-caption); line-height: 1.6; }
+.nx-gloss dt { font-weight: var(--cds-font-weight-medium); }
+.nx-gloss dd { margin: 0; color: var(--color-fg-muted); }
+.nx-gloss summary { cursor: pointer; font-weight: var(--cds-font-weight-medium); }
+.nx-scroll { max-height: 24rem; overflow: auto; }
+.nx-scroll th { position: sticky; top: 0; background: var(--color-panel); }
+[data-dash-source-state=empty] { color: transparent; }
+[data-dash-source-state=refreshing] { opacity: .5; transition: opacity var(--cds-dur-slow); }
+.nx-fail { display: flex; align-items: center; justify-content: center; gap: var(--cds-gap-xs); color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); min-height: inherit; }
+.nx-fail::before { content: ""; width: .375rem; height: .375rem; border-radius: 50%; background: var(--color-bad); }
+</style>
+
+<div class="nx">
+  <header class="nx-head" id="top">
+    <h1>Nora 美股看板</h1>
+    <p>数据截至 <b data-draw="asof" data-source="prices">—</b> 美股收盘。纳斯达克当日 <b data-draw="ndx" data-source="market" data-field="chg_pct" data-where="item=纳斯达克综合">—</b>，你关注的 <b data-draw="total" data-source="summary" data-field="total">—</b> 只标的中有 <b data-draw="down" data-source="summary" data-field="down">—</b> 只下跌，近一个月跌幅最大的是 <b data-draw="worst" data-source="summary" data-field="worst">—</b>。这一轮下跌的主线是中期选举后的数据中心政策风险，叠加 12 月加息预期。</p>
+  </header>
+
+  <nav class="nx-nav" aria-label="跳转">
+    <button type="button" data-go="market">大盘</button>
+    <button type="button" data-go="watch">关注清单</button>
+    <button type="button" data-go="stocks">个股指标</button>
+    <button type="button" data-go="earnings">财报</button>
+    <button type="button" data-go="risks">风险提示</button>
+    <button type="button" data-go="outlook">市场展望</button>
+    <button type="button" data-go="picks">低估潜力股</button>
+  </nav>
+
+  <section class="nx-sec" id="market">
+    <h2>大盘与宏观</h2>
+    <p class="nx-note">最近一个交易日收盘数据。</p>
+    <div class="nx-tiles" data-draw="market" data-source="market" data-fetchpriority="high"></div>
+  </section>
+
+  <section class="nx-sec" id="watch">
+    <h2>关注清单</h2>
+    <p class="nx-note">收盘价与涨跌幅；近一个月 = 10/8 收盘以来。点表头排序。</p>
+    <div class="nx-card nx-tablewrap">
+      <table class="nx-table" data-source="moves" data-row-key="ticker">
+        <thead><tr>
+          <th data-field="ticker"><button type="button" data-sort="ticker">代码</button></th>
+          <th data-field="name" class="nx-hide-sm">名称</th>
+          <th data-field="sector" class="nx-hide-sm">板块</th>
+          <th data-field="close" class="num"><button type="button" data-sort="close">收盘价</button></th>
+          <th data-field="day_pct" class="num"><button type="button" data-sort="day_pct">当日</button></th>
+          <th data-field="m1_pct" class="num"><button type="button" data-sort="m1_pct">近一个月</button></th>
+        </tr></thead>
+        <tbody data-draw="moves"></tbody>
+      </table>
+    </div>
+    <div class="nx-spark" id="spark" data-draw="spark" data-source="prices"></div>
+  </section>
+
+  <section class="nx-sec" id="stocks">
+    <h2>个股指标与分析师观点</h2>
+    <p class="nx-note">市盈率按最新收盘价和分析师一致预期的每股收益实时计算；分析师数据截至各股「数据日期」。ETF（VTI、VT）没有这类指标，不列入。</p>
+    <details class="nx-card nx-gloss">
+      <summary>这些指标怎么看</summary>
+      <dl>
+        <dt>市盈率（PE）</dt><dd>股价 ÷ 每股收益：花多少年的利润买下这家公司。越低越便宜，但要和同行业、和公司自己的历史比，不同行业差别很大。</dd>
+        <dt>上财年 PE</dt><dd>用上一个完整财年的实际利润计算，最可靠，但反映的是过去。</dd>
+        <dt>前瞻 PE</dt><dd>用分析师对本财年 / 下财年利润的预测计算。看的是未来，但前提是预测准确；周期股在景气高点时前瞻 PE 往往最低，这是常见陷阱。</dd>
+        <dt>PEG</dt><dd>下财年 PE ÷ 下财年利润增速（%）。把估值和增长放在一起看：同样的 PE，增长越快越值。通常低于一倍算便宜，高于两倍算贵。增速为负时不计算。</dd>
+        <dt>营收增速</dt><dd>本财年营收的一致预期增速。利润可以靠削减成本做出来，营收增长更难造假。</dd>
+        <dt>分析师共识</dt><dd>覆盖该股的卖方分析师评级汇总。卖方整体偏乐观，「持有」常常已经是偏谨慎的意思；覆盖人数太少时参考价值有限。</dd>
+        <dt>目标价空间</dt><dd>分析师平均 12 个月目标价相对现价的涨幅。目标价调整通常滞后于股价，大跌后空间会被「机械地」放大。</dd>
+        <dt>我的判断</dt><dd>综合估值、增长、预期是否可靠和主要风险给出的定性结论：偏低估 / 合理偏低 / 合理 / 偏高估 / 高风险。不构成投资建议。</dd>
+      </dl>
+    </details>
+    <div class="nx-card nx-tablewrap">
+      <table class="nx-table" data-source="valuation" data-row-key="ticker">
+        <thead><tr>
+          <th data-field="ticker">代码</th>
+          <th data-field="price" class="num">股价</th>
+          <th data-field="pe_last" class="num">上财年 PE</th>
+          <th data-field="pe_this" class="num">本财年 PE</th>
+          <th data-field="pe_next" class="num nx-hide-sm">下财年 PE</th>
+          <th data-field="peg" class="num">PEG</th>
+          <th data-field="rev_g_this" class="num nx-hide-sm">营收增速</th>
+          <th data-field="upside" class="num">目标价空间</th>
+          <th data-field="consensus">共识</th>
+        </tr></thead>
+        <tbody data-draw="valuation"></tbody>
+      </table>
+    </div>
+    <div class="nx-cards" data-draw="stockcards" data-source="fundamentals analysts verdicts valuation"></div>
+  </section>
+
+  <section class="nx-sec" id="earnings">
+    <h2>财报</h2>
+    <p class="nx-note">「预计」表示公司尚未公布日期，按往年节奏估算。时间均为美东。</p>
+    <div class="nx-card">
+      <h3>即将发布</h3>
+      <div class="nx-tablewrap">
+        <table class="nx-table" data-source="earnings" data-row-key="ticker">
+          <thead><tr>
+            <th data-field="next_date">日期</th>
+            <th data-field="ticker">代码</th>
+            <th data-field="next_label">季度</th>
+          </tr></thead>
+          <tbody data-draw="upcoming"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="nx-cards" data-draw="reported" data-source="earnings"></div>
+  </section>
+
+  <section class="nx-sec" id="risks">
+    <h2>近期风险提示</h2>
+    <p class="nx-note">按影响程度排序，来自近一周新闻。</p>
+    <div class="nx-card"><div class="nx-list" data-draw="risks" data-source="risks"></div></div>
+  </section>
+
+  <section class="nx-sec" id="outlook">
+    <h2>市场展望</h2>
+    <div class="nx-card">
+      <h3>我的判断</h3>
+      <p class="nx-take">短期偏防御。卖方的年末目标是在暴跌前给出的，还没反映选举后的政策变化；而策略师和机构评论几乎一致指向「AI 投入要开始证明回报」。接下来三个节点决定方向：今晚的 10 月非农、11/18 英伟达财报、12/9 美联储议息。与数据中心无关、现金流扎实的标的（如 GE、XOM、宽基 ETF）相对更稳；AI 链个股在政策不确定消除前，波动大概率持续。</p>
+    </div>
+    <div class="nx-card"><div class="nx-list" data-draw="outlook" data-source="outlook"></div></div>
+  </section>
+
+  <section class="nx-sec" id="picks">
+    <h2>低估潜力股</h2>
+    <p class="nx-note">筛选逻辑：估值低于同业或自身历史，且最近一季出现经营拐点（利润或营收加速、指引上调）。大中小盘混合，每两周更新一次。仅供研究参考，不构成投资建议。</p>
+    <div class="nx-card">
+      <h3>本期判断</h3>
+      <div class="nx-list" data-draw="round" data-source="pick_rounds"></div>
+    </div>
+    <div class="nx-cards" data-draw="picks" data-source="picks pick_upside"></div>
+    <div class="nx-grid2">
+      <div class="nx-card">
+        <h3>重复推荐统计</h3>
+        <p class="nx-note nx-muted">近一年内各股被推荐的次数，以及首次推荐以来价格变化（按最近一次推荐时记录的价格）。</p>
+        <div class="nx-tablewrap">
+          <table class="nx-table" data-source="repeat_stats" data-row-key="ticker">
+            <thead><tr>
+              <th data-field="ticker">代码</th>
+              <th data-field="times" class="num">次数</th>
+              <th data-field="first_date">首次</th>
+              <th data-field="last_date">最近</th>
+              <th data-field="chg_pct" class="num">期间涨跌</th>
+            </tr></thead>
+            <tbody data-draw="repeat"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="nx-card">
+        <h3>判断日志</h3>
+        <p class="nx-note nx-muted">每两周一期，保留最近一年，更早的记录自动剔除。</p>
+        <div class="nx-tablewrap nx-scroll">
+          <table class="nx-table" data-source="log_window" data-row-key="id">
+            <thead><tr>
+              <th data-field="date">日期</th>
+              <th data-field="ticker">代码</th>
+              <th data-field="price" class="num">当时价格</th>
+              <th data-field="reason" class="nx-hide-sm">理由</th>
+            </tr></thead>
+            <tbody data-draw="log"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <details class="nx-foot">
+    <summary>数据来源与说明</summary>
+    <p>行情：Alpha Vantage、FMP 与 StockAnalysis 的日线收盘价，每个交易日由定时任务更新。大盘点位与宏观数据：Motley Fool、StockTitan、CME FedWatch。财报：公司公告与 SEC 8-K，部分来自 XTB、24/7 Wall St. 等转述。风险与观点：CNBC、AP、Yahoo Finance、Bloomberg 调查的公开报道。标普 500 当日跌幅不同来源为 −4.33% 与 −4.36%，此处取 −4.36%。前瞻市盈率为近似值。</p>
+  </details>
+</div>
+
+<script>
+(() => {
+const pct = (v) => (v > 0 ? '+' : '') + d3.format('.2f')(v) + '%';
+const cls = (v) => (v > 0 ? 'nx-up' : v < 0 ? 'nx-down' : '');
+const money = (v) => '$' + d3.format(',.2f')(v);
+window.nxPct = pct; window.nxCls = cls; window.nxMoney = money;
+
+dash.calc('moves', {
+  title: '清单涨跌幅',
+  description: '每只标的最新收盘价、当日涨跌幅和 10/8 以来涨跌幅。',
+  inputs: ['prices', 'watchlist'],
+  fn: (prices, watchlist) => watchlist.map((w) => {
+    const s = prices.filter((p) => p.ticker === w.ticker).sort((a, b) => a.date < b.date ? -1 : 1);
+    const last = s[s.length - 1], prev = s[s.length - 2], first = s[0];
+    return {
+      ticker: w.ticker, name: w.name, sector: w.sector,
+      close: last.close,
+      day_pct: Math.round((last.close / prev.close - 1) * 10000) / 100,
+      m1_pct: Math.round((last.close / first.close - 1) * 10000) / 100,
+    };
+  }),
+});
+
+dash.calc('summary', {
+  title: '清单概况',
+  description: '清单标的数量、当日下跌数量、近一个月跌幅最大者。',
+  inputs: ['moves'],
+  fn: (moves) => {
+    const worst = moves.slice().sort((a, b) => a.m1_pct - b.m1_pct)[0];
+    return [{ total: moves.length, down: moves.filter((m) => m.day_pct < 0).length, worst: worst.ticker + ' ' + (worst.m1_pct > 0 ? '+' : '') + worst.m1_pct.toFixed(2) + '%' }];
+  },
+});
+
+dash.calc('pick_upside', {
+  title: '距分析师目标价',
+  description: '分析师平均目标价相对推荐时价格的空间。',
+  inputs: ['picks'],
+  fn: (picks) => picks.filter((p) => p.target != null).map((p) => ({ ticker: p.ticker, upside: Math.round((p.target / p.price - 1) * 1000) / 10 })),
+});
+
+dash.calc('valuation', {
+  title: '估值指标',
+  description: '最新收盘价除以分析师一致预期每股收益得到的市盈率、PEG 和目标价空间。',
+  inputs: ['prices', 'fundamentals'],
+  fn: (prices, fundamentals) => fundamentals.map((f) => {
+    const s = prices.filter((p) => p.ticker === f.ticker).sort((a, b) => a.date < b.date ? -1 : 1);
+    const price = s[s.length - 1].close;
+    const r1 = (v) => Math.round(v * 10) / 10;
+    const g = (f.eps_next / f.eps_this - 1) * 100;
+    const peNext = price / f.eps_next;
+    return {
+      ticker: f.ticker, price,
+      pe_last: r1(price / f.eps_last), pe_this: r1(price / f.eps_this), pe_next: r1(peNext),
+      eps_growth_next: r1(g),
+      peg: g > 0 ? Math.round(peNext / g * 100) / 100 : null,
+      rev_g_this: f.rev_g_this,
+      upside: r1((f.target_avg / price - 1) * 100),
+      consensus: f.consensus,
+    };
+  }),
+});
+
+dash.calc('log_window', {
+  title: '近一年判断日志',
+  description: '只保留最新一期往前 365 天内的推荐记录。',
+  inputs: ['picks_log'],
+  fn: (picks_log) => {
+    const day = (v) => typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10);
+    const rows = picks_log.map((r) => Object.assign({}, r, { date: day(r.date) }));
+    const latest = rows.reduce((m, r) => r.date > m ? r.date : m, '');
+    const cut = String(Number(latest.slice(0, 4)) - 1) + latest.slice(4);
+    return rows.filter((r) => r.date > cut).sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : a.ticker.localeCompare(b.ticker));
+  },
+});
+
+dash.calc('repeat_stats', {
+  title: '重复推荐统计',
+  description: '近一年每只股票被推荐的次数、首次和最近日期，以及两次记录价格之间的涨跌。',
+  inputs: ['log_window'],
+  fn: (log_window) => {
+    const tickers = log_window.map((r) => r.ticker).filter((t, i, arr) => arr.indexOf(t) === i);
+    return tickers.map((ticker) => {
+      const rs = log_window.filter((r) => r.ticker === ticker).sort((a, b) => a.date < b.date ? -1 : 1);
+      const first = rs[0], last = rs[rs.length - 1];
+      return { ticker, times: rs.length, first_date: first.date, last_date: last.date, chg_pct: Math.round((last.price / first.price - 1) * 1000) / 10 };
+    }).sort((a, b) => b.times - a.times || a.ticker.localeCompare(b.ticker));
+  },
+});
+
+window.nxLinks = (links) => {
+  const box = document.createElement('div'); box.className = 'nx-src';
+  const parse = (v) => { if (typeof v !== 'string') return v; try { return JSON.parse(v); } catch (e) { return null; } };
+  let list = parse(links);
+  if (!Array.isArray(list)) list = list ? [list] : [];
+  list = list.map(parse).flat();
+  const ok = list.filter((l) => l && typeof l.u === 'string' && /^https:\/\//.test(l.u));
+  if (!ok.length) return box;
+  box.append(document.createTextNode('来源：'));
+  for (const l of ok) {
+    const a = document.createElement('a');
+    a.href = l.u; a.target = '_blank'; a.rel = 'noopener noreferrer'; a.textContent = l.t || l.u;
+    box.append(a);
+  }
+  return box;
+};
+
+document.querySelectorAll('[data-go]').forEach((b) => b.addEventListener('click', () => {
+  const el = document.getElementById(b.dataset.go);
+  if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); dash.setLink(el.id); }
+}));
+})();
+</script>
+
+<script>
+(() => {
+const pct = window.nxPct, cls = window.nxCls, money = window.nxMoney;
+const failOrDash = (el, id) => {
+  const s = dash.data(id).status;
+  if (s === 'error') { el.replaceChildren(Object.assign(document.createElement('span'), { className: 'nx-fail', textContent: '加载失败' })); return true; }
+  if (s !== 'ok') { el.textContent = '—'; return true; }
+  return false;
+};
+window.nxFail = failOrDash;
+
+dash.draw('asof', (el) => {
+  if (failOrDash(el, 'prices')) return;
+  const d = d3.max(dash.data('prices').data, (r) => r.date);
+  el.textContent = d3.utcFormat('%Y-%m-%d')(new Date(d));
+});
+dash.draw('ndx', (el) => {
+  el.classList.remove('nx-up', 'nx-down');
+  if (failOrDash(el, 'market')) return;
+  const r = dash.data('market').data.find((x) => x.item === '纳斯达克综合');
+  if (!r) { el.textContent = '—'; return; }
+  el.textContent = pct(r.chg_pct); el.classList.add(cls(r.chg_pct));
+});
+for (const k of ['total', 'down', 'worst']) {
+  dash.draw(k, (el) => {
+    if (failOrDash(el, 'summary')) return;
+    el.textContent = String(dash.data('summary').data[0][k]);
+  });
+}
+
+dash.draw('market', (el) => {
+  if (failOrDash(el, 'market')) return;
+  el.replaceChildren(...dash.data('market').data.map((r) => {
+    const t = document.createElement('div'); t.className = 'nx-tile';
+    const lab = document.createElement('div'); lab.className = 'lab'; lab.textContent = r.item;
+    const val = document.createElement('div'); val.className = 'val';
+    val.textContent = (r.unit === '点' ? d3.format(',')(r.value) : r.value) + (r.unit && r.unit !== '点' ? r.unit : '');
+    t.append(lab, val);
+    if (r.chg_pct != null) { const s = document.createElement('div'); s.className = 'sub ' + cls(r.chg_pct); s.textContent = pct(r.chg_pct); t.append(s); }
+    if (r.note) { const n = document.createElement('div'); n.className = 'sub nx-muted'; n.textContent = r.note; t.append(n); }
+    t.append(window.nxLinks(r.links));
+    return t;
+  }));
+});
+
+let sortKey = 'm1_pct', sortAsc = true;
+document.querySelectorAll('[data-sort]').forEach((b) => b.addEventListener('click', () => {
+  const k = b.dataset.sort;
+  if (sortKey === k) sortAsc = !sortAsc; else { sortKey = k; sortAsc = k === 'ticker'; }
+  document.querySelectorAll('[data-sort]').forEach((x) => x.closest('th').setAttribute('aria-sort', x.dataset.sort === sortKey ? (sortAsc ? 'ascending' : 'descending') : 'none'));
+  dash.draw('moves');
+}));
+
+dash.draw('moves', (tb) => {
+  const g = dash.data('moves');
+  if (g.status !== 'ok') { tb.replaceChildren(); return; }
+  const rows = g.data.slice().sort((a, b) => {
+    const x = a[sortKey], y = b[sortKey];
+    const c = typeof x === 'string' ? x.localeCompare(y) : x - y;
+    return sortAsc ? c : -c;
+  });
+  tb.replaceChildren(...rows.map((r) => {
+    const tr = document.createElement('tr');
+    const td = (text, c) => { const e = document.createElement('td'); e.textContent = text; if (c) e.className = c; return e; };
+    tr.append(td(r.ticker, 'tk'), td(r.name, 'nx-hide-sm'), td(r.sector, 'nx-hide-sm nx-muted'), td(money(r.close), 'num'), td(pct(r.day_pct), 'num ' + cls(r.day_pct)), td(pct(r.m1_pct), 'num ' + cls(r.m1_pct)));
+    return tr;
+  }));
+});
+
+dash.draw('spark', (el) => {
+  const g = dash.data('prices');
+  if (g.status === 'error') { failOrDash(el, 'prices'); return; }
+  if (g.status !== 'ok') { el.replaceChildren(); return; }
+  const by = d3.group(g.data, (r) => r.ticker);
+  const order = [...by.keys()];
+  el.replaceChildren();
+  for (const tk of order) {
+    const s = by.get(tk).map((r) => ({ date: new Date(r.date), close: r.close })).sort((a, b) => a.date - b.date);
+    const first = s[0].close, last = s[s.length - 1].close, ch = (last / first - 1) * 100;
+    const box = document.createElement('div'); box.className = 'nx-sp';
+    const head = document.createElement('div'); head.className = 't';
+    const a = document.createElement('span'); a.textContent = tk;
+    const b = document.createElement('span'); b.className = cls(ch); b.textContent = pct(ch);
+    head.append(a, b); box.append(head); el.append(box);
+    const w = Math.max(160, box.clientWidth - 24), h = 56;
+    const x = d3.scaleUtc(d3.extent(s, (d) => d.date), [2, w - 2]);
+    const y = d3.scaleLinear(d3.extent(s, (d) => d.close), [h - 4, 4]);
+    const color = ch >= 0 ? 'var(--color-ok)' : 'var(--color-bad)';
+    const svg = d3.select(box).append('svg').attr('width', '100%').attr('viewBox', `0 0 ${w} ${h}`).attr('height', h);
+    svg.append('line').attr('x1', 2).attr('x2', w - 2).attr('y1', y(first)).attr('y2', y(first)).attr('stroke', 'var(--cds-chart-reference)').attr('stroke-dasharray', '3 3');
+    svg.append('path').datum(s).attr('fill', 'none').attr('stroke', color).attr('stroke-width', 2).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round').attr('d', d3.line((d) => x(d.date), (d) => y(d.close)));
+    const dot = svg.append('circle').attr('r', 3).attr('fill', color).attr('visibility', 'hidden');
+    const tip = document.createElement('div'); tip.className = 'nx-tip'; tip.hidden = true; box.append(tip);
+    const td = document.createElement('div'); td.className = 'd'; const tv = document.createElement('div'); tip.append(td, tv);
+    svg.append('rect').attr('width', w).attr('height', h).attr('fill', 'transparent')
+      .on('pointermove', (ev) => {
+        const [mx] = d3.pointer(ev);
+        const i = d3.leastIndex(s, (d) => Math.abs(x(d.date) - mx));
+        const d = s[i];
+        dot.attr('cx', x(d.date)).attr('cy', y(d.close)).attr('visibility', 'visible');
+        td.textContent = d3.utcFormat('%m-%d')(d.date); tv.textContent = money(d.close);
+        tip.hidden = false;
+        const bw = box.clientWidth, px = (x(d.date) / w) * (bw - 24) + 12;
+        tip.style.left = Math.min(Math.max(4, px - tip.offsetWidth / 2), bw - tip.offsetWidth - 4) + 'px';
+        tip.style.top = '4px';
+      })
+      .on('pointerleave', () => { dot.attr('visibility', 'hidden'); tip.hidden = true; });
+  }
+});
+})();
+</script>
+
+<script>
+(() => {
+window.nxDay = (v) => v == null ? '' : typeof v === 'string' ? v.slice(0, 10) : new Date(v).toISOString().slice(0, 10);
+const day = window.nxDay;
+const fmtDay = (s) => /^\d{4}-\d{2}-\d{2}$/.test(s) ? s.slice(5).replace('-', '/') : s;
+const mk = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+
+dash.draw('upcoming', (tb) => {
+  const g = dash.data('earnings');
+  if (g.status !== 'ok') { tb.replaceChildren(); return; }
+  const rows = g.data.slice().sort((a, b) => day(a.next_date).localeCompare(day(b.next_date)));
+  tb.replaceChildren(...rows.map((r) => {
+    const tr = document.createElement('tr');
+    const d = mk('td', null, day(r.next_date));
+    if (!r.next_confirmed) d.append(mk('span', 'nx-muted', '（预计）'));
+    tr.append(d, mk('td', 'tk', r.ticker), mk('td', 'nx-muted', r.next_label));
+    return tr;
+  }));
+});
+
+dash.draw('reported', (el) => {
+  if (window.nxFail(el, 'earnings')) return;
+  const rows = dash.data('earnings').data.slice().sort((a, b) => day(b.last_date).localeCompare(day(a.last_date)));
+  el.replaceChildren(...rows.map((r) => {
+    const c = mk('div', 'nx-card nx-item');
+    const hd = mk('div', 'hd'); hd.append(mk('span', 'ttl', r.ticker), mk('span', 'meta', r.last_period + ' · ' + day(r.last_date)));
+    c.append(hd, mk('p', null, r.last_summary), mk('p', 'insight', r.insight), window.nxLinks(r.links));
+    return c;
+  }));
+});
+
+const lvl = { '高': 'hi', '中': 'mid', '提示': 'lo' };
+dash.draw('risks', (el) => {
+  if (window.nxFail(el, 'risks')) return;
+  const order = { '高': 0, '中': 1, '提示': 2 };
+  const rows = dash.data('risks').data.slice().sort((a, b) => (order[a.level] ?? 3) - (order[b.level] ?? 3));
+  el.replaceChildren(...rows.map((r) => {
+    const c = mk('div', 'nx-item');
+    const hd = mk('div', 'hd'); hd.append(mk('span', 'nx-pill ' + (lvl[r.level] || 'lo'), r.level), mk('span', 'ttl', r.title), mk('span', 'meta', day(r.date)));
+    c.append(hd, mk('p', null, r.detail), mk('p', 'meta', '影响：' + r.affects), window.nxLinks(r.links));
+    return c;
+  }));
+});
+
+dash.draw('outlook', (el) => {
+  if (window.nxFail(el, 'outlook')) return;
+  el.replaceChildren(...dash.data('outlook').data.map((r) => {
+    const c = mk('div', 'nx-item');
+    const st = r.stance.includes('多') ? 'bull' : r.stance.includes('空') ? 'hi' : 'lo';
+    const hd = mk('div', 'hd'); hd.append(mk('span', 'nx-pill ' + st, r.stance), mk('span', 'ttl', r.who), mk('span', 'meta', day(r.date)));
+    c.append(hd, mk('p', null, r.view));
+    if (r.target != null) c.append(mk('p', 'meta', '标普 500 年末目标：' + d3.format(',')(r.target)));
+    c.append(window.nxLinks(r.links));
+    return c;
+  }));
+});
+
+dash.draw('picks', (el) => {
+  if (window.nxFail(el, 'picks')) return;
+  const up = dash.data('pick_upside');
+  const upMap = new Map(up.status === 'ok' ? up.data.map((u) => [u.ticker, u.upside]) : []);
+  el.replaceChildren(...dash.data('picks').data.map((r) => {
+    const c = mk('div', 'nx-card nx-item');
+    const hd = mk('div', 'hd'); hd.append(mk('span', 'ttl', r.ticker + ' · ' + r.name), mk('span', 'nx-pill lo', r.cap));
+    const kv = mk('div', 'nx-kv');
+    const pair = (k, v, extra) => { const s = mk('span', null, k + ' '); const b = mk('b', extra || null, v); s.append(b); return s; };
+    kv.append(pair('价格', window.nxMoney(r.price)), pair('前瞻市盈率', r.fwd_pe));
+    if (r.target != null) {
+      kv.append(pair('分析师均价目标', window.nxMoney(r.target)));
+      if (upMap.has(r.ticker)) { const u = upMap.get(r.ticker); kv.append(pair('空间', (u > 0 ? '+' : '') + u.toFixed(1) + '%', window.nxCls(u))); }
+    }
+    c.append(hd, kv, mk('p', null, r.thesis), mk('p', 'insight', '风险：' + r.risk), mk('p', 'meta', '入选 ' + day(r.added) + ' · 价格日期 ' + day(r.price_date)), window.nxLinks(r.links));
+    return c;
+  }));
+});
+
+dash.draw('round', (el) => {
+  if (window.nxFail(el, 'pick_rounds')) return;
+  const rows = dash.data('pick_rounds').data.slice().sort((a, b) => day(b.date).localeCompare(day(a.date)));
+  const r = rows[0];
+  if (!r) { el.textContent = '—'; return; }
+  const c = mk('div', 'nx-item');
+  const hd = mk('div', 'hd'); hd.append(mk('span', 'ttl', day(r.date)), mk('span', 'meta', '本期：' + r.tickers));
+  c.append(hd, mk('p', null, r.judgment), window.nxLinks(r.links));
+  el.replaceChildren(c);
+});
+
+const fx1 = (v) => v == null || !isFinite(v) ? '—' : d3.format('.1f')(v);
+const sgn = (v) => (v > 0 ? '+' : '') + d3.format('.1f')(v) + '%';
+
+dash.draw('valuation', (tb) => {
+  const g = dash.data('valuation');
+  if (g.status !== 'ok') { tb.replaceChildren(); return; }
+  tb.replaceChildren(...g.data.map((r) => {
+    const tr = document.createElement('tr');
+    const td = (text, c) => { const e = document.createElement('td'); e.textContent = text; if (c) e.className = c; return e; };
+    tr.append(td(r.ticker, 'tk'), td(window.nxMoney(r.price), 'num'), td(fx1(r.pe_last), 'num'), td(fx1(r.pe_this), 'num'), td(fx1(r.pe_next), 'num nx-hide-sm'),
+      td(r.peg == null ? '—' : d3.format('.2f')(r.peg), 'num'), td(sgn(r.rev_g_this), 'num nx-hide-sm'), td(sgn(r.upside), 'num ' + window.nxCls(r.upside)), td(r.consensus));
+    return tr;
+  }));
+});
+
+const vcls = (v) => v.startsWith('偏低估') || v.startsWith('合理偏低') ? 'bull' : v.startsWith('合理') ? 'lo' : v.startsWith('数字') ? 'mid' : 'hi';
+dash.draw('stockcards', (el) => {
+  const ids = ['fundamentals', 'analysts', 'verdicts', 'valuation'];
+  if (ids.some((id) => window.nxFail(el, id))) return;
+  const an = dash.data('analysts').data, vd = dash.data('verdicts').data, va = dash.data('valuation').data;
+  el.replaceChildren(...dash.data('fundamentals').data.map((f) => {
+    const v = vd.find((x) => x.ticker === f.ticker), q = va.find((x) => x.ticker === f.ticker);
+    const c = mk('div', 'nx-card nx-item'); c.id = 'stock-' + f.ticker;
+    const hd = mk('div', 'hd'); hd.append(mk('span', 'ttl', f.ticker));
+    if (v) hd.append(mk('span', 'nx-pill ' + vcls(v.verdict), '我的判断：' + v.verdict));
+    const m = mk('div', 'nx-metrics');
+    const add = (k, val) => { const d = mk('div'); d.append(mk('span', 'k', k), mk('span', 'v', val)); m.append(d); };
+    add(f.fy_this + ' 前瞻 PE', fx1(q && q.pe_this));
+    add(f.fy_next + ' 利润增速', q ? sgn(q.eps_growth_next) : '—');
+    add('PEG', q && q.peg != null ? d3.format('.2f')(q.peg) : '—');
+    add('平均目标价', window.nxMoney(f.target_avg));
+    add('目标价区间', '$' + d3.format(',')(f.target_low) + '–' + d3.format(',')(f.target_high));
+    const brk = f.r_sb == null ? '' : '（强买 ' + f.r_sb + ' / 买 ' + f.r_b + ' / 持有 ' + f.r_h + ' / 卖 ' + (f.r_s + f.r_ss) + '）';
+    add('共识 · ' + f.n_analysts + ' 位', f.consensus);
+    c.append(hd, m);
+    if (brk) c.append(mk('p', 'meta', '评级分布' + brk));
+    const t = mk('table', 'nx-an'); const tbody = mk('tbody'); t.append(tbody);
+    for (const a of an.filter((x) => x.ticker === f.ticker)) {
+      const tr = mk('tr');
+      tr.append(mk('td', null, a.firm + ' · ' + a.analyst), mk('td', null, a.rating + (a.action ? '，' + a.action : '')), mk('td', 'r', a.target == null ? '无目标价' : window.nxMoney(a.target)), mk('td', 'r nx-muted', day(a.date).slice(5).replace('-', '/')));
+      tbody.append(tr);
+    }
+    c.append(t);
+    if (v) c.append(mk('p', 'insight', v.view));
+    c.append(mk('p', 'meta', '分析师数据日期 ' + day(f.asof)), window.nxLinks([f.link]));
+    return c;
+  }));
+});
+
+dash.draw('repeat', (tb) => {
+  const g = dash.data('repeat_stats');
+  if (g.status !== 'ok') { tb.replaceChildren(); return; }
+  tb.replaceChildren(...g.data.map((r) => {
+    const tr = document.createElement('tr');
+    tr.append(mk('td', 'tk', r.ticker), mk('td', 'num', String(r.times)), mk('td', null, day(r.first_date)), mk('td', null, day(r.last_date)), mk('td', 'num ' + window.nxCls(r.chg_pct), r.times > 1 ? sgn(r.chg_pct) : '—'));
+    return tr;
+  }));
+});
+
+dash.draw('log', (tb) => {
+  const g = dash.data('log_window');
+  if (g.status !== 'ok') { tb.replaceChildren(); return; }
+  tb.replaceChildren(...g.data.map((r) => {
+    const tr = document.createElement('tr');
+    tr.append(mk('td', null, day(r.date)), mk('td', 'tk', r.ticker), mk('td', 'num', window.nxMoney(r.price)), mk('td', 'nx-hide-sm nx-muted', r.reason));
+    return tr;
+  }));
+});
+
+const named = document.getElementById(location.hash.slice(1));
+if (named) setTimeout(() => named.scrollIntoView(), 300);
+})();
+</script>
+
+</div>
+</body>
+</html>

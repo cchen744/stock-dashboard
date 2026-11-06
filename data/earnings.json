@@ -1,0 +1,198 @@
+[
+ {
+  "ticker": "NVDA",
+  "last_date": "2026-08-26",
+  "last_period": "FY27 Q2",
+  "last_summary": "营收 $96.2B（同比 +106%），数据中心 $89.0B；GAAP 毛利率 75.0%，EPS $2.46；Q3 指引约 $108B（±2%）。",
+  "next_date": "2026-11-18",
+  "next_label": "FY27 Q3",
+  "next_confirmed": true,
+  "insight": "11/18 财报是检验「AI 资本开支能否持续」的关键事件。当前下跌主要来自政策和估值预期，而非需求数据本身。",
+  "links": [
+   {
+    "t": "iPhone in Canada：Q2 FY27 业绩",
+    "u": "https://www.iphoneincanada.ca/2026/08/27/nvidia-blows-past-expectations-with-96-2-billion-revenue-in-q2-2027/"
+   },
+   {
+    "t": "SEC 8-K 财报新闻稿",
+    "u": "https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000073/q2fy27pr.htm"
+   },
+   {
+    "t": "StockAnalysis：财报日期",
+    "u": "https://stockanalysis.com/stocks/NVDA"
+   }
+  ]
+ },
+ {
+  "ticker": "ANET",
+  "last_date": "2026-11-03",
+  "last_period": "2026 Q3",
+  "last_summary": "营收 $3.66B（同比 +58.5%，预期 $3.33B）；Non-GAAP EPS $1.20（预期 $1.08）；GAAP 毛利率 63.6%（去年同期 64.6%）。Q4 指引营收 $3.9–4.0B、EPS $1.26–1.30。",
+  "next_date": "2027-02",
+  "next_label": "2026 Q4（预计）",
+  "next_confirmed": false,
+  "insight": "基本面是清单里最强之一：增速为上市以来最快，指引高于预期。但盘后 +6% 两天内被 AI 链抛售抹去，说明短期由板块情绪定价。",
+  "links": [
+   {
+    "t": "24/7 Wall St.：Q3 2026",
+    "u": "https://247wallst.com/cards/arista-networks-q3-2026-earnings-anet-01m6hm6v5atgmt0qczy1xw4ymp"
+   },
+   {
+    "t": "XTB：财报后股价反应",
+    "u": "https://www.xtb.com/en/market-analysis/news-and-research/arista-networks-shares-jump-6-after-earnings-revenue-growth-hits-its-highest-level-since-ipo"
+   }
+  ]
+ },
+ {
+  "ticker": "MU",
+  "last_date": "2026-09-30",
+  "last_period": "FY26 Q4",
+  "last_summary": "营收 $54.23B；Non-GAAP EPS $33.42；毛利率 87.0%。FY27 Q1 指引营收 $61.5B（±1.5B）、毛利率约 86.25%、EPS $38.15（±1.00）。",
+  "next_date": "2026-12-16",
+  "next_label": "FY27 Q1（预计）",
+  "next_confirmed": false,
+  "insight": "按指引估算的前瞻市盈率极低，但 87% 毛利率处于存储周期的极端高位，市场在为周期见顶定价。11/5 单日 −17.5%，另有台湾工厂停工报道（Bloomberg，路透未能证实）。",
+  "links": [
+   {
+    "t": "SEC 8-K FQ4 2026",
+    "u": "https://www.sec.gov/Archives/edgar/data/0000723125/000072312526000018/a2026q4ex991-pressrelease.htm"
+   },
+   {
+    "t": "INDmoney：11/5 暴跌原因",
+    "u": "https://www.indmoney.com/blog/us-stocks/inside-sandisk-sndk-micron-mu-stock-crash"
+   }
+  ]
+ },
+ {
+  "ticker": "GOOGL",
+  "last_date": "2026-10-28",
+  "last_period": "2026 Q3",
+  "last_summary": "营收 $127.6B（同比 +25%，略低于约 $128B 预期）；EPS $2.12（预期约 $3.00，含 $8.7B 投资亏损）；Google Cloud $30.7B（+103%），经营利润率 36.2%；季度资本开支 $51.4B，自由现金流 −$9.1B。",
+  "next_date": "2027-02",
+  "next_label": "2026 Q4（预计）",
+  "next_confirmed": false,
+  "insight": "云业务极强，但自由现金流转负、靠发债和股权融资支撑资本开支，市场不再为「只花钱不回本」买单。10/29 单日 −12.6%。",
+  "links": [
+   {
+    "t": "XTB：Alphabet Q3",
+    "u": "https://www.xtb.com/en/market-analysis/news-and-research/alphabet-disappoints-wall-street-despite-record-results-shares-plunge-over-8-and-test-300"
+   }
+  ]
+ },
+ {
+  "ticker": "AAON",
+  "last_date": "2026-08",
+  "last_period": "2026 Q2",
+  "last_summary": "营收 $627.0M，净利润 $56.7M；上调 2026 全年指引。Q1 时积压订单 $2.13B（同比 +107%）。",
+  "next_date": "2026-11-09",
+  "next_label": "2026 Q3（盘后）",
+  "next_confirmed": true,
+  "insight": "数据中心冷却（BASX）敞口让它被 AI 链抛售波及：11/4–11/5 两日约 −21%，创一年新低。11/9 财报要看积压订单和毛利率是否守住。",
+  "links": [
+   {
+    "t": "Yahoo Finance：Q2 业绩与指引",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/why-aaon-aaon-raised-2026-023343536.html"
+   },
+   {
+    "t": "SEC 8-K：积压订单",
+    "u": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000034/liveaaonpressreleaseexs.htm"
+   },
+   {
+    "t": "StockTitan：Q3 财报日期",
+    "u": "https://www.stocktitan.net/news/AAON/the-aaon-group-announces-third-quarter-2026-conference-call-and-e48wshw3d1ev.html"
+   }
+  ]
+ },
+ {
+  "ticker": "XOM",
+  "last_date": "2026-10-30",
+  "last_period": "2026 Q3",
+  "last_summary": "GAAP 盈利 $15.4B（$3.72/股），调整后 $4.23/股；经营现金流 $25.7B，自由现金流 $19.1B；季度股东回报 $9.4B；计划 2027 年回购 $20B。",
+  "next_date": "2027-01-30",
+  "next_label": "2026 Q4（预计）",
+  "next_confirmed": false,
+  "insight": "现金流和回购稳健，但上游受油价拖累。美伊释放谈判信号后布伦特一周跌约 16%，是近期主要逆风。",
+  "links": [
+   {
+    "t": "ExxonMobil：Q3 2026 业绩",
+    "u": "https://investor.exxonmobil.com/company-information/press-releases/detail/1213/exxonmobil-announces-third-quarter-2026-results"
+   },
+   {
+    "t": "Trading Economics：布伦特油价",
+    "u": "https://tradingeconomics.com/commodity/brent-crude-oil/news/582523"
+   }
+  ]
+ },
+ {
+  "ticker": "GE",
+  "last_date": "2026-10-20",
+  "last_period": "2026 Q3",
+  "last_summary": "订单 $19.0B（+49%）；调整后营收 $13.3B（+18%）；调整后 EPS $2.25（+36%）；全面上调 2026 指引，商用发动机利润指引升至 $10.5–10.6B；积压订单超 $170B。",
+  "next_date": "2027-01-下旬",
+  "next_label": "2026 Q4（预计）",
+  "next_confirmed": false,
+  "insight": "基本面清晰向上，且与数据中心政策无关。11/5 −4.5% 属于大盘拖累。",
+  "links": [
+   {
+    "t": "GE Aerospace：Q3 2026 业绩",
+    "u": "https://www.geaerospace.com/news/press-releases/ge-aerospace-announces-third-quarter-2026-results"
+   }
+  ]
+ },
+ {
+  "ticker": "MS",
+  "last_date": "2026-10-14",
+  "last_period": "2026 Q3",
+  "last_summary": "营收 $20.3B（预期 $19.9B）；EPS $3.03（预期 $2.93）；股票交易收入强劲，财富管理资金净流入创纪录。",
+  "next_date": "2027-01-中旬",
+  "next_label": "2026 Q4（预计）",
+  "next_confirmed": false,
+  "insight": "业绩超预期，但对市场成交和利率高度敏感；若 12 月加息叠加市场下跌，投行和交易收入承压。",
+  "links": [
+   {
+    "t": "Newsquawk：Q3 2026 对比预期",
+    "u": "https://www.newsquawk.com/headlines/morgan-stanley-ms-q3-2026-usd-eps-303-exp-293-revenue-203bln-exp-199bln"
+   },
+   {
+    "t": "Finviz：财报发布",
+    "u": "https://finviz.com/news/402279/morgan-stanley-reports-third-quarter-2026-earnings-results"
+   }
+  ]
+ },
+ {
+  "ticker": "SANM",
+  "last_date": "2026-07-27",
+  "last_period": "FY26 Q3",
+  "last_summary": "营收 $3.46B；Non-GAAP EPS $3.31（高于指引）。FY26 Q4 指引营收 $3.3–3.6B、EPS $3.05–3.35；全年 EPS 指引上调至 $11.90–12.20。",
+  "next_date": "2026-11-09",
+  "next_label": "FY26 Q4（盘后）",
+  "next_confirmed": true,
+  "insight": "ZT Systems 并购让营收规模接近翻倍（FY25 $8.1B → FY26 指引 $14.0–14.3B），但整合和 AI 机架需求同样暴露于数据中心政策风险。11/4–11/5 两日约 −21%。",
+  "links": [
+   {
+    "t": "SEC 8-K FQ3 2026",
+    "u": "https://www.sec.gov/Archives/edgar/data/0000897723/000089772326000036/sanmina_exx991xjune272026.htm"
+   },
+   {
+    "t": "Finviz：FQ4 财报日期",
+    "u": "https://finviz.com/news/404162/sanmina-corporation-invites-you-to-join-its-fourth-quarter-and-fiscal-year-2026-earnings-conference-call"
+   }
+  ]
+ },
+ {
+  "ticker": "FORM",
+  "last_date": "2026-10-28",
+  "last_period": "2026 Q3",
+  "last_summary": "营收 $280.5M（创纪录）；Non-GAAP EPS $1.04。Q4 指引营收约 $285M、EPS 约 $0.95、Non-GAAP 毛利率约 54%。",
+  "next_date": "2027-02",
+  "next_label": "2026 Q4（预计）",
+  "next_confirmed": false,
+  "insight": "营收创新高但 Q4 利润指引环比走弱，叠加半导体抛售，近一个月跌幅接近一半。",
+  "links": [
+   {
+    "t": "Rallies：Q3 业绩与 Q4 指引",
+    "u": "https://rallies.ai/news/formfactor-forecasts-q4-revenue-of-285-million-7acaa25683cae799"
+   }
+  ]
+ }
+]

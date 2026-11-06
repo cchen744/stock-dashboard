@@ -1,0 +1,17 @@
+[
+ {
+  "date": "2026-11-06",
+  "judgment": "首期。市场处于 AI 链和数据中心政策引发的急跌中，选股刻意偏向与数据中心关联较低、估值不高、且最近一季出现利润拐点的公司（花旗、PayPal、CarMax）；Sanmina 作为高风险高赔率的一只保留，并明确标注其政策敞口。",
+  "tickers": "C, PYPL, KMX, SANM",
+  "links": [
+   {
+    "t": "Yahoo Finance：机构如何看纳指修正",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/smart-people-saying-nasdaq-sinks-124338308.html"
+   },
+   {
+    "t": "AP：数据中心与中期选举",
+    "u": "https://www.clickorlando.com/news/politics/2026/11/06/data-centers-took-a-beating-in-the-midterm-elections-a-reckoning-may-be-ahead-for-tech-giants/"
+   }
+  ]
+ }
+]

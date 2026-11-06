@@ -1,0 +1,124 @@
+[
+ {
+  "id": "r1",
+  "level": "高",
+  "title": "数据中心政策收紧",
+  "detail": "中期选举后民主党拿下得州、俄亥俄等 5 州州长；47 场地方公投中 44 场通过限制；多位当选州长支持暂停或严审数据中心项目。UBS 估计约 30% 的 2028 年预期新增数据中心产能受影响。",
+  "affects": "NVDA, MU, ANET, SANM, FORM, AAON, GOOGL",
+  "date": "2026-11-05",
+  "links": [
+   {
+    "t": "AP：数据中心与中期选举",
+    "u": "https://www.clickorlando.com/news/politics/2026/11/06/data-centers-took-a-beating-in-the-midterm-elections-a-reckoning-may-be-ahead-for-tech-giants/"
+   },
+   {
+    "t": "StockTitan：11/5 收盘",
+    "u": "https://www.stocktitan.net/articles/stock-market-today-live-november-5-2026"
+   }
+  ]
+ },
+ {
+  "id": "r2",
+  "level": "高",
+  "title": "美联储 12 月可能加息",
+  "detail": "CME 数据显示 12/9 加息 25bp 的概率约 70%（前一日 82.7%）。10 年期美债 4.90%。今晚（北京时间 11/6 21:30）公布 10 月非农，预期 +6.5 万、失业率 4.2%，数据偏强会推高加息预期。",
+  "affects": "全部，尤其高估值成长股和 MS",
+  "date": "2026-11-05",
+  "links": [
+   {
+    "t": "IndexBox：非农前瞻与加息概率",
+    "u": "https://www.indexbox.io/blog/october-jobs-report-preview-economists-expect-65000-job-additions-unemployment-at-42/"
+   },
+   {
+    "t": "StockTitan：11/5 收盘",
+    "u": "https://www.stocktitan.net/articles/stock-market-today-live-november-5-2026"
+   }
+  ]
+ },
+ {
+  "id": "r3",
+  "level": "高",
+  "title": "AI 资本开支回报受质疑",
+  "detail": "Alphabet Q3 自由现金流转负（−$9.1B），靠发债和增发支撑开支。Rosenberg Research、Saxo 等认为市场已从奖励 AI 建设转向追问回本周期；对冲基金 AI 敞口出现创纪录的总敞口回撤（摩根士丹利数据）。",
+  "affects": "GOOGL, NVDA, ANET, MU",
+  "date": "2026-11-03",
+  "links": [
+   {
+    "t": "XTB：Alphabet Q3",
+    "u": "https://www.xtb.com/en/market-analysis/news-and-research/alphabet-disappoints-wall-street-despite-record-results-shares-plunge-over-8-and-test-300"
+   },
+   {
+    "t": "Yahoo Finance：机构如何看纳指修正",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/smart-people-saying-nasdaq-sinks-124338308.html"
+   }
+  ]
+ },
+ {
+  "id": "r4",
+  "level": "中",
+  "title": "半导体技术面破位",
+  "detail": "费城半导体 ETF 11/5 单日跌超 12%，为 2020 年 3 月以来最差；纳指进入修正；VIX 盘中触及 28.09。短期波动可能延续。",
+  "affects": "NVDA, MU, FORM, ANET",
+  "date": "2026-11-05",
+  "links": [
+   {
+    "t": "StockTitan：11/5 收盘",
+    "u": "https://www.stocktitan.net/articles/stock-market-today-live-november-5-2026"
+   },
+   {
+    "t": "Motley Fool：11/5 收盘",
+    "u": "https://www.fool.com/coverage/stock-market-today/2026/11/05/stock-market-today-nov-5-nasdaq-suffers-worst-day-in-18-months-as-ai-trade-comes-under-fire/"
+   }
+  ]
+ },
+ {
+  "id": "r5",
+  "level": "中",
+  "title": "油价快速回落",
+  "detail": "美伊释放谈判信号（卡塔尔斡旋），布伦特一周跌约 16% 至 $95–96。若停火落地，油价可能继续下行。",
+  "affects": "XOM",
+  "date": "2026-11-05",
+  "links": [
+   {
+    "t": "Trading Economics：布伦特油价",
+    "u": "https://tradingeconomics.com/commodity/brent-crude-oil/news/582523"
+   }
+  ]
+ },
+ {
+  "id": "r6",
+  "level": "中",
+  "title": "美光个股消息面",
+  "detail": "Bloomberg 报道美光因劳资纠纷暂停台湾 $4.5B 工厂建设（路透未能证实）；高通手机芯片收入同比 −26%，消费电子需求偏弱。",
+  "affects": "MU",
+  "date": "2026-11-05",
+  "links": [
+   {
+    "t": "INDmoney：美光暴跌原因",
+    "u": "https://www.indmoney.com/blog/us-stocks/inside-sandisk-sndk-micron-mu-stock-crash"
+   }
+  ]
+ },
+ {
+  "id": "r7",
+  "level": "提示",
+  "title": "近期财报事件",
+  "detail": "AAON 与 Sanmina 均在 11/9 美股盘后发布财报（北京时间 11/10 早上）；英伟达 11/18。在当前情绪下，财报日单日波动可能很大。",
+  "affects": "AAON, SANM, NVDA",
+  "date": "2026-11-06",
+  "links": [
+   {
+    "t": "StockTitan：AAON 财报日期",
+    "u": "https://www.stocktitan.net/news/AAON/the-aaon-group-announces-third-quarter-2026-conference-call-and-e48wshw3d1ev.html"
+   },
+   {
+    "t": "Finviz：Sanmina 财报日期",
+    "u": "https://finviz.com/news/404162/sanmina-corporation-invites-you-to-join-its-fourth-quarter-and-fiscal-year-2026-earnings-conference-call"
+   },
+   {
+    "t": "StockAnalysis：英伟达",
+    "u": "https://stockanalysis.com/stocks/NVDA"
+   }
+  ]
+ }
+]

@@ -1,0 +1,96 @@
+[
+ {
+  "item": "纳斯达克综合",
+  "value": 24315,
+  "unit": "点",
+  "chg_pct": -5.52,
+  "note": "较高点回撤超 10%，进入修正",
+  "links": [
+   {
+    "t": "Motley Fool：11/5 收盘",
+    "u": "https://www.fool.com/coverage/stock-market-today/2026/11/05/stock-market-today-nov-5-nasdaq-suffers-worst-day-in-18-months-as-ai-trade-comes-under-fire/"
+   },
+   {
+    "t": "StockTitan：11/5 收盘",
+    "u": "https://www.stocktitan.net/articles/stock-market-today-live-november-5-2026"
+   }
+  ]
+ },
+ {
+  "item": "标普 500",
+  "value": 7356,
+  "unit": "点",
+  "chg_pct": -4.36,
+  "note": "2025 年 4 月以来最差单日",
+  "links": [
+   {
+    "t": "Motley Fool：11/5 收盘",
+    "u": "https://www.fool.com/coverage/stock-market-today/2026/11/05/stock-market-today-nov-5-nasdaq-suffers-worst-day-in-18-months-as-ai-trade-comes-under-fire/"
+   },
+   {
+    "t": "StockTitan：11/5 收盘",
+    "u": "https://www.stocktitan.net/articles/stock-market-today-live-november-5-2026"
+   }
+  ]
+ },
+ {
+  "item": "道琼斯",
+  "value": 51523,
+  "unit": "点",
+  "chg_pct": -3.44,
+  "note": "",
+  "links": [
+   {
+    "t": "Motley Fool：11/5 收盘",
+    "u": "https://www.fool.com/coverage/stock-market-today/2026/11/05/stock-market-today-nov-5-nasdaq-suffers-worst-day-in-18-months-as-ai-trade-comes-under-fire/"
+   }
+  ]
+ },
+ {
+  "item": "10 年期美债",
+  "value": 4.9,
+  "unit": "%",
+  "chg_pct": null,
+  "note": "10 月曾短暂突破 5%",
+  "links": [
+   {
+    "t": "Motley Fool：11/5 收盘",
+    "u": "https://www.fool.com/coverage/stock-market-today/2026/11/05/stock-market-today-nov-5-nasdaq-suffers-worst-day-in-18-months-as-ai-trade-comes-under-fire/"
+   },
+   {
+    "t": "Yahoo Finance：策略师年末目标",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/wall-street-maintains-p-500-130000886.html"
+   }
+  ]
+ },
+ {
+  "item": "VIX（盘中高点）",
+  "value": 28.09,
+  "unit": "",
+  "chg_pct": null,
+  "note": "3 月 31 日以来最高",
+  "links": [
+   {
+    "t": "StockTitan：11/5 收盘",
+    "u": "https://www.stocktitan.net/articles/stock-market-today-live-november-5-2026"
+   }
+  ]
+ },
+ {
+  "item": "12 月加息概率",
+  "value": 70.1,
+  "unit": "%",
+  "chg_pct": null,
+  "note": "CME FedWatch，前一日 82.7%",
+  "links": [
+   {
+    "t": "StockTitan：11/5 收盘",
+    "u": "https://www.stocktitan.net/articles/stock-market-today-live-november-5-2026"
+   },
+   {
+    "t": "IndexBox：非农前瞻与加息概率",
+    "u": "https://www.indexbox.io/blog/october-jobs-report-preview-economists-expect-65000-job-additions-unemployment-at-42/"
+   }
+  ]
+ }
+]

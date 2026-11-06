@@ -1,0 +1,100 @@
+[
+ {
+  "id": "o1",
+  "who": "Bloomberg 19 位策略师调查",
+  "stance": "偏多",
+  "view": "2026 年末标普 500 平均目标 7,967（9 月为 7,976），19 人中仅 2 人调整。注意：调查截至 10/23，早于本轮暴跌。",
+  "target": 7967,
+  "date": "2026-10-31",
+  "links": [
+   {
+    "t": "Yahoo Finance：策略师年末目标",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/wall-street-maintains-p-500-130000886.html"
+   }
+  ]
+ },
+ {
+  "id": "o2",
+  "who": "HSBC · Max Kettner",
+  "stance": "偏多",
+  "view": "收益率回落可以给估值喘息空间，回调可视为买入机会。",
+  "target": null,
+  "date": "2026-10-31",
+  "links": [
+   {
+    "t": "Yahoo Finance：策略师年末目标",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/wall-street-maintains-p-500-130000886.html"
+   }
+  ]
+ },
+ {
+  "id": "o3",
+  "who": "Wells Fargo",
+  "stance": "偏空",
+  "view": "Q3 财报平均超预期幅度仅 2.1%（五年均值 7.5%），是有记录以来最弱之一。",
+  "target": null,
+  "date": "2026-10-31",
+  "links": [
+   {
+    "t": "Yahoo Finance：策略师年末目标",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/wall-street-maintains-p-500-130000886.html"
+   }
+  ]
+ },
+ {
+  "id": "o4",
+  "who": "Rosenberg Research · David Rosenberg",
+  "stance": "偏空",
+  "view": "修正「几乎不可避免」：投资者不再奖励 AI 建设本身，而是开始追问何时回本。",
+  "target": null,
+  "date": "2026-11-03",
+  "links": [
+   {
+    "t": "Yahoo Finance：机构如何看纳指修正",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/smart-people-saying-nasdaq-sinks-124338308.html"
+   }
+  ]
+ },
+ {
+  "id": "o5",
+  "who": "Deutsche Bank · Jim Reid",
+  "stance": "偏空",
+  "view": "「蓝色浪潮」预期压制科技股，市场在定价更难的数据中心建设环境和更严的 AI 监管。",
+  "target": null,
+  "date": "2026-11-03",
+  "links": [
+   {
+    "t": "Yahoo Finance：机构如何看纳指修正",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/smart-people-saying-nasdaq-sinks-124338308.html"
+   }
+  ]
+ },
+ {
+  "id": "o6",
+  "who": "Saxo · Neil Wilson",
+  "stance": "偏空",
+  "view": "基金在整体降低 AI 敞口，称其为「有点像泡沫破裂的时刻」。",
+  "target": null,
+  "date": "2026-11-03",
+  "links": [
+   {
+    "t": "Yahoo Finance：机构如何看纳指修正",
+    "u": "https://finance.yahoo.com/markets/stocks/articles/smart-people-saying-nasdaq-sinks-124338308.html"
+   }
+  ]
+ },
+ {
+  "id": "o7",
+  "who": "Morgan Stanley",
+  "stance": "中性偏空",
+  "view": "预计数据中心限制会增多，州级规则可能把美国分成开放和不开放数据中心的区域。",
+  "target": null,
+  "date": "2026-11-06",
+  "links": [
+   {
+    "t": "AP：数据中心与中期选举",
+    "u": "https://www.clickorlando.com/news/politics/2026/11/06/data-centers-took-a-beating-in-the-midterm-elections-a-reckoning-may-be-ahead-for-tech-giants/"
+   }
+  ]
+ }
+]

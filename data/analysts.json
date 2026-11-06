@@ -1,0 +1,562 @@
+[
+ {
+  "id": "NVDA-0",
+  "ticker": "NVDA",
+  "firm": "Bernstein",
+  "analyst": "Stacy Rasgon",
+  "rating": "买入",
+  "action": "维持",
+  "target": 400,
+  "date": "2026-10-26",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/nvda/forecast/"
+  }
+ },
+ {
+  "id": "NVDA-1",
+  "ticker": "NVDA",
+  "firm": "Barclays",
+  "analyst": "Thomas O'Malley",
+  "rating": "买入",
+  "action": "维持",
+  "target": 275,
+  "date": "2026-10-26",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/nvda/forecast/"
+  }
+ },
+ {
+  "id": "NVDA-2",
+  "ticker": "NVDA",
+  "firm": "Morgan Stanley",
+  "analyst": "Joseph Moore",
+  "rating": "买入",
+  "action": "重申",
+  "target": 300,
+  "date": "2026-10-22",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/nvda/forecast/"
+  }
+ },
+ {
+  "id": "NVDA-3",
+  "ticker": "NVDA",
+  "firm": "Citi",
+  "analyst": "Atif Malik",
+  "rating": "买入",
+  "action": "维持",
+  "target": 315,
+  "date": "2026-10-22",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/nvda/forecast/"
+  }
+ },
+ {
+  "id": "NVDA-4",
+  "ticker": "NVDA",
+  "firm": "Goldman Sachs",
+  "analyst": "James Schneider",
+  "rating": "买入",
+  "action": "维持",
+  "target": 300,
+  "date": "2026-10-21",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/nvda/forecast/"
+  }
+ },
+ {
+  "id": "ANET-5",
+  "ticker": "ANET",
+  "firm": "Bernstein",
+  "analyst": "Daniel Zhu",
+  "rating": "买入",
+  "action": "维持",
+  "target": 250,
+  "date": "2026-10-26",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/anet/forecast/"
+  }
+ },
+ {
+  "id": "ANET-6",
+  "ticker": "ANET",
+  "firm": "Bank of America",
+  "analyst": "Tal Liani",
+  "rating": "买入",
+  "action": "维持",
+  "target": 240,
+  "date": "2026-10-23",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/anet/forecast/"
+  }
+ },
+ {
+  "id": "ANET-7",
+  "ticker": "ANET",
+  "firm": "UBS",
+  "analyst": "David Vogt",
+  "rating": "买入",
+  "action": "维持",
+  "target": 259,
+  "date": "2026-10-16",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/anet/forecast/"
+  }
+ },
+ {
+  "id": "ANET-8",
+  "ticker": "ANET",
+  "firm": "Citi",
+  "analyst": "Atif Malik",
+  "rating": "买入",
+  "action": "上调目标 $215→$248",
+  "target": 248,
+  "date": "2026-10-08",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/anet/forecast/"
+  }
+ },
+ {
+  "id": "MU-9",
+  "ticker": "MU",
+  "firm": "Citi",
+  "analyst": "Atif Malik",
+  "rating": "买入",
+  "action": "维持",
+  "target": 1300,
+  "date": "2026-10-29",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/mu/forecast/"
+  }
+ },
+ {
+  "id": "MU-10",
+  "ticker": "MU",
+  "firm": "Bernstein",
+  "analyst": "Mark Li",
+  "rating": "买入",
+  "action": "重申",
+  "target": 1300,
+  "date": "2026-10-28",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/mu/forecast/"
+  }
+ },
+ {
+  "id": "MU-11",
+  "ticker": "MU",
+  "firm": "Bank of America",
+  "analyst": "Vivek Arya",
+  "rating": "买入",
+  "action": "维持",
+  "target": 1550,
+  "date": "2026-10-26",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/mu/forecast/"
+  }
+ },
+ {
+  "id": "MU-12",
+  "ticker": "MU",
+  "firm": "Wedbush",
+  "analyst": "Matt Bryson",
+  "rating": "买入",
+  "action": "维持",
+  "target": 1400,
+  "date": "2026-10-23",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/mu/forecast/"
+  }
+ },
+ {
+  "id": "GOOGL-13",
+  "ticker": "GOOGL",
+  "firm": "Citi",
+  "analyst": "Ronald Josey",
+  "rating": "买入",
+  "action": "下调目标 $447→$375",
+  "target": 375,
+  "date": "2026-10-30",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/googl/forecast/"
+  }
+ },
+ {
+  "id": "GOOGL-14",
+  "ticker": "GOOGL",
+  "firm": "J.P. Morgan",
+  "analyst": "Doug Anmuth",
+  "rating": "买入",
+  "action": "下调目标 $425→$375",
+  "target": 375,
+  "date": "2026-10-29",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/googl/forecast/"
+  }
+ },
+ {
+  "id": "GOOGL-15",
+  "ticker": "GOOGL",
+  "firm": "Truist",
+  "analyst": "Youssef Squali",
+  "rating": "买入",
+  "action": "下调目标 $420→$410",
+  "target": 410,
+  "date": "2026-10-29",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/googl/forecast/"
+  }
+ },
+ {
+  "id": "GOOGL-16",
+  "ticker": "GOOGL",
+  "firm": "D.A. Davidson",
+  "analyst": "Gil Luria",
+  "rating": "持有",
+  "action": "下调目标 $350→$300",
+  "target": 300,
+  "date": "2026-10-29",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/googl/forecast/"
+  }
+ },
+ {
+  "id": "AAON-17",
+  "ticker": "AAON",
+  "firm": "Oppenheimer",
+  "analyst": "Noah Kaye",
+  "rating": "买入",
+  "action": "下调目标 $125→$115",
+  "target": 115,
+  "date": "2026-10-14",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/aaon/forecast/"
+  }
+ },
+ {
+  "id": "AAON-18",
+  "ticker": "AAON",
+  "firm": "D.A. Davidson",
+  "analyst": "Matt Summerville",
+  "rating": "买入",
+  "action": "首次覆盖",
+  "target": 110,
+  "date": "2026-09-15",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/aaon/forecast/"
+  }
+ },
+ {
+  "id": "AAON-19",
+  "ticker": "AAON",
+  "firm": "Robert W. Baird",
+  "analyst": "Timothy Wojs",
+  "rating": "买入",
+  "action": "下调目标 $150→$135",
+  "target": 135,
+  "date": "2026-08-11",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/aaon/forecast/"
+  }
+ },
+ {
+  "id": "AAON-20",
+  "ticker": "AAON",
+  "firm": "KeyBanc",
+  "analyst": "Jeffrey Hammond",
+  "rating": "持有",
+  "action": "维持",
+  "target": null,
+  "date": "2026-08-11",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/aaon/forecast/"
+  }
+ },
+ {
+  "id": "XOM-21",
+  "ticker": "XOM",
+  "firm": "TD Cowen",
+  "analyst": "Jason Gabelman",
+  "rating": "买入",
+  "action": "维持",
+  "target": 180,
+  "date": "2026-10-22",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/xom/forecast/"
+  }
+ },
+ {
+  "id": "XOM-22",
+  "ticker": "XOM",
+  "firm": "Morgan Stanley",
+  "analyst": "Devin McDermott",
+  "rating": "买入",
+  "action": "维持",
+  "target": 185,
+  "date": "2026-10-21",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/xom/forecast/"
+  }
+ },
+ {
+  "id": "XOM-23",
+  "ticker": "XOM",
+  "firm": "Bank of America",
+  "analyst": "Jean Ann Salisbury",
+  "rating": "持有",
+  "action": "上调目标 $158→$181",
+  "target": 181,
+  "date": "2026-10-21",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/xom/forecast/"
+  }
+ },
+ {
+  "id": "XOM-24",
+  "ticker": "XOM",
+  "firm": "Goldman Sachs",
+  "analyst": "Neil Mehta",
+  "rating": "持有",
+  "action": "上调目标 $169→$178",
+  "target": 178,
+  "date": "2026-10-20",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/xom/forecast/"
+  }
+ },
+ {
+  "id": "GE-25",
+  "ticker": "GE",
+  "firm": "TD Cowen",
+  "analyst": "Gautam Khanna",
+  "rating": "买入",
+  "action": "维持",
+  "target": 380,
+  "date": "2026-10-23",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ge/forecast/"
+  }
+ },
+ {
+  "id": "GE-26",
+  "ticker": "GE",
+  "firm": "Bernstein",
+  "analyst": "Douglas Harned",
+  "rating": "买入",
+  "action": "下调目标 $421→$376",
+  "target": 376,
+  "date": "2026-10-21",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ge/forecast/"
+  }
+ },
+ {
+  "id": "GE-27",
+  "ticker": "GE",
+  "firm": "RBC Capital",
+  "analyst": "Kenneth Herbert",
+  "rating": "买入",
+  "action": "下调目标 $400→$375",
+  "target": 375,
+  "date": "2026-10-21",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ge/forecast/"
+  }
+ },
+ {
+  "id": "GE-28",
+  "ticker": "GE",
+  "firm": "Susquehanna",
+  "analyst": "Charles Minervino",
+  "rating": "买入",
+  "action": "下调目标 $430→$400",
+  "target": 400,
+  "date": "2026-10-21",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ge/forecast/"
+  }
+ },
+ {
+  "id": "MS-29",
+  "ticker": "MS",
+  "firm": "BMO Capital",
+  "analyst": "Brennan Hawken",
+  "rating": "买入",
+  "action": "下调目标 $215→$210",
+  "target": 210,
+  "date": "2026-10-19",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ms/forecast/"
+  }
+ },
+ {
+  "id": "MS-30",
+  "ticker": "MS",
+  "firm": "J.P. Morgan",
+  "analyst": "Kian Abouhossein",
+  "rating": "持有",
+  "action": "上调目标 $195→$198",
+  "target": 198,
+  "date": "2026-10-16",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ms/forecast/"
+  }
+ },
+ {
+  "id": "MS-31",
+  "ticker": "MS",
+  "firm": "Bank of America",
+  "analyst": "Ebrahim Poonawala",
+  "rating": "买入",
+  "action": "下调目标 $225→$220",
+  "target": 220,
+  "date": "2026-10-16",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ms/forecast/"
+  }
+ },
+ {
+  "id": "MS-32",
+  "ticker": "MS",
+  "firm": "Evercore ISI",
+  "analyst": "Glenn Schorr",
+  "rating": "买入",
+  "action": "下调目标 $215→$205",
+  "target": 205,
+  "date": "2026-10-15",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/ms/forecast/"
+  }
+ },
+ {
+  "id": "SANM-33",
+  "ticker": "SANM",
+  "firm": "J.P. Morgan",
+  "analyst": "Manmohanpreet Singh",
+  "rating": "持有",
+  "action": "上调目标 $260→$270",
+  "target": 270,
+  "date": "2026-10-12",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/sanm/forecast/"
+  }
+ },
+ {
+  "id": "SANM-34",
+  "ticker": "SANM",
+  "firm": "Bank of America",
+  "analyst": "Ruplu Bhattacharya",
+  "rating": "持有",
+  "action": "下调目标 $280→$270",
+  "target": 270,
+  "date": "2026-07-28",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/sanm/forecast/"
+  }
+ },
+ {
+  "id": "SANM-35",
+  "ticker": "SANM",
+  "firm": "Argus Research",
+  "analyst": "Jim Kelleher",
+  "rating": "买入",
+  "action": "上调目标 $200→$260",
+  "target": 260,
+  "date": "2026-04-28",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/sanm/forecast/"
+  }
+ },
+ {
+  "id": "FORM-36",
+  "ticker": "FORM",
+  "firm": "B. Riley",
+  "analyst": "Craig Ellis",
+  "rating": "买入",
+  "action": "下调目标 $165→$150",
+  "target": 150,
+  "date": "2026-10-19",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/form/forecast/"
+  }
+ },
+ {
+  "id": "FORM-37",
+  "ticker": "FORM",
+  "firm": "Deutsche Bank",
+  "analyst": "George Brown",
+  "rating": "买入",
+  "action": "首次覆盖",
+  "target": 200,
+  "date": "2026-09-30",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/form/forecast/"
+  }
+ },
+ {
+  "id": "FORM-38",
+  "ticker": "FORM",
+  "firm": "Stifel",
+  "analyst": "Brian Chin",
+  "rating": "持有",
+  "action": "下调目标 $135→$115",
+  "target": 115,
+  "date": "2026-07-31",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/form/forecast/"
+  }
+ },
+ {
+  "id": "FORM-39",
+  "ticker": "FORM",
+  "firm": "Evercore ISI",
+  "analyst": "Vedvati Shrotre",
+  "rating": "买入",
+  "action": "下调目标 $155→$150",
+  "target": 150,
+  "date": "2026-07-30",
+  "link": {
+   "t": "StockAnalysis 分析师预测",
+   "u": "https://stockanalysis.com/stocks/form/forecast/"
+  }
+ }
+]

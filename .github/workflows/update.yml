@@ -1,0 +1,35 @@
+name: 更新行情
+
+on:
+  schedule:
+    - cron: "17 22 * * 1-5"   # UTC 22:17，美股收盘后（北京时间次日 06:17）
+  workflow_dispatch: {}        # 允许在 Actions 页面手动运行
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install yfinance requests
+      - run: python scripts/update_prices.py
+        env:
+          ALPHAVANTAGE_KEY: ${{ secrets.ALPHAVANTAGE_KEY }}
+      - name: 提交数据
+        run: |
+          git config user.name "dashboard-bot"
+          git config user.email "dashboard-bot@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet && echo "no changes" && exit 0
+          git commit -m "data: 行情更新 $(date -u +%F)"
+          git pull --rebase
+          git push
