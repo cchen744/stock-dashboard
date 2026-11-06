@@ -18,7 +18,7 @@
  },
  {
   "item": "标普 500",
-  "value": 7356,
+  "value": 7354,
   "unit": "点",
   "chg_pct": -4.36,
   "note": "2025 年 4 月以来最差单日",
@@ -48,7 +48,7 @@
  },
  {
   "item": "10 年期美债",
-  "value": 4.9,
+  "value": 4.84,
   "unit": "%",
   "chg_pct": null,
   "note": "10 月曾短暂突破 5%",
@@ -64,11 +64,11 @@
   ]
  },
  {
-  "item": "VIX（盘中高点）",
-  "value": 28.09,
+  "item": "VIX",
+  "value": 26.38,
   "unit": "",
   "chg_pct": null,
-  "note": "3 月 31 日以来最高",
+  "note": "2026-11-06 收盘",
   "links": [
    {
     "t": "StockTitan：11/5 收盘",
