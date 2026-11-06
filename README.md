@@ -18,7 +18,7 @@ scripts/update_prices.py      行情更新脚本（yfinance，失败时回退 Al
    - 注意：macOS 默认隐藏以 `.` 开头的文件夹，在 Finder 里按 `Cmd+Shift+.` 可以显示。
    - 网页上传有时会漏掉 `.github` 文件夹。如果漏了，就用 **Add file → Create new file**，文件名填 `.github/workflows/update.yml`，再把内容粘贴进去。
 3. 打开 **Settings → Pages**，Source 选 **Deploy from a branch**，Branch 选 `main`，目录选 `/ (root)`，保存。
-   大约 1 分钟后，网址会是 `https://<你的用户名>.github.io/stock-dashboard/`。
+   大约 1 分钟后，网址会是 `https://cchen744.github.io/stock-dashboard/`。
 4. 打开 **Settings → Actions → General → Workflow permissions**，选 **Read and write permissions** 并保存。
 5. （可选）打开 **Settings → Secrets and variables → Actions → New repository secret**，名称填 `ALPHAVANTAGE_KEY`，值填你的 Alpha Vantage key，作为行情的备用数据源。
 6. 打开 **Actions → 更新行情 → Run workflow** 手动运行一次，确认能正常更新。
