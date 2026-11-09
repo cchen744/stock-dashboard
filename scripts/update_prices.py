@@ -25,16 +25,19 @@ def save(name, obj):
 
 
 def closes_yf(tickers, period="3mo"):
+    """逐只下载（比批量 download 更稳定），每只最多重试 3 次。"""
     import yfinance as yf
-    df = yf.download(tickers, period=period, interval="1d", auto_adjust=False, progress=False, group_by="ticker", threads=True)
     out = {}
     for t in tickers:
-        try:
-            s = df[t]["Close"].dropna()
-        except Exception:
-            continue
-        if len(s):
-            out[t] = {d.strftime("%Y-%m-%d"): round(float(v), 4) for d, v in s.items()}
+        for attempt in range(3):
+            try:
+                s = yf.Ticker(t).history(period=period, interval="1d", auto_adjust=False)["Close"].dropna()
+                if len(s):
+                    out[t] = {d.strftime("%Y-%m-%d"): round(float(v), 4) for d, v in s.items()}
+                    break
+            except Exception as e:
+                print(f"yfinance {t} attempt {attempt + 1} failed: {e}", file=sys.stderr)
+            time.sleep(2)
     return out
 
 
@@ -70,21 +73,35 @@ def update_prices():
     data = get_closes(tickers)
     if any(t not in data for t in tickers):
         raise SystemExit(f"missing tickers: {[t for t in tickers if t not in data]}")
-    common = sorted(set.intersection(*(set(v) for v in data.values())))[-WINDOW:]
-    if len(common) < WINDOW:
-        raise SystemExit("not enough aligned trading days")
+    # 诊断：每只股票拿到的最新日期
+    latest = max(max(v) for v in data.values())
+    for t in tickers:
+        print(f"{t}: last date {max(data[t])}, close {data[t][max(data[t])]}")
+    lagging = [t for t in tickers if latest not in data[t]]
+    if lagging:  # 个别股票缺最新一天：单独再用 Alpha Vantage 补一次
+        print("missing latest day", latest, "for", lagging, "-> retry via Alpha Vantage", file=sys.stderr)
+        for t, s in closes_av(lagging).items():
+            data[t].update(s)
+        lagging = [t for t in tickers if latest not in data[t]]
+        if lagging:
+            # 不再让一只股票拖住全部：其余股票照常更新到最新日，落后的这只保留它自己的最新数据
+            print("WARNING: still missing", latest, "for", lagging, "- these keep their own last date", file=sys.stderr)
     old = load("prices")
     old_last = max(r["date"] for r in old) if old else ""
-    if common[-1] < old_last:
+    if latest < old_last:
         raise SystemExit("new data older than existing data; abort")
-    for t in tickers:  # 单日 ±25% 以上的异常值直接中止，交给人工核对
-        a, b = data[t][common[-2]], data[t][common[-1]]
-        if abs(b / a - 1) > 0.25:
+    rows = []
+    for t in tickers:
+        ds = sorted(data[t])[-WINDOW:]
+        if len(ds) < WINDOW:
+            raise SystemExit(f"{t}: not enough trading days")
+        a, b = data[t][ds[-2]], data[t][ds[-1]]
+        if abs(b / a - 1) > 0.25:  # 单日 ±25% 以上的异常值直接中止，交给人工核对
             raise SystemExit(f"{t} moved {b / a - 1:.1%} in one day; please verify manually")
-    rows = [{"ticker": t, "date": d, "close": round(data[t][d], 2)} for t in tickers for d in common]
+        rows += [{"ticker": t, "date": d, "close": round(data[t][d], 2)} for d in ds]
     save("prices", rows)
-    print("prices updated to", common[-1])
-    return common[-1]
+    print("prices updated to", latest)
+    return latest
 
 
 INDEX = {"纳斯达克综合": "^IXIC", "标普 500": "^GSPC", "道琼斯": "^DJI", "10 年期美债": "^TNX", "VIX": "^VIX"}
