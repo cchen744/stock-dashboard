@@ -1,11 +1,6 @@
 [
  {
   "ticker": "NVDA",
-  "date": "2026-10-19",
-  "close": 217.09
- },
- {
-  "ticker": "NVDA",
   "date": "2026-10-20",
   "close": 216.47
  },
@@ -105,9 +100,9 @@
   "close": 156.14
  },
  {
-  "ticker": "ANET",
-  "date": "2026-10-19",
-  "close": 182.95
+  "ticker": "NVDA",
+  "date": "2026-11-17",
+  "close": 155.46
  },
  {
   "ticker": "ANET",
@@ -210,9 +205,9 @@
   "close": 187.02
  },
  {
-  "ticker": "MU",
-  "date": "2026-10-19",
-  "close": 904.9
+  "ticker": "ANET",
+  "date": "2026-11-17",
+  "close": 186.42
  },
  {
   "ticker": "MU",
@@ -315,9 +310,9 @@
   "close": 719.02
  },
  {
-  "ticker": "GOOGL",
-  "date": "2026-10-19",
-  "close": 344.18
+  "ticker": "MU",
+  "date": "2026-11-17",
+  "close": 712.42
  },
  {
   "ticker": "GOOGL",
@@ -420,9 +415,9 @@
   "close": 283.72
  },
  {
-  "ticker": "AAON",
-  "date": "2026-10-19",
-  "close": 75.34
+  "ticker": "GOOGL",
+  "date": "2026-11-17",
+  "close": 280.2
  },
  {
   "ticker": "AAON",
@@ -525,9 +520,9 @@
   "close": 78.2
  },
  {
-  "ticker": "XOM",
-  "date": "2026-10-19",
-  "close": 178.28
+  "ticker": "AAON",
+  "date": "2026-11-17",
+  "close": 78.71
  },
  {
   "ticker": "XOM",
@@ -630,9 +625,9 @@
   "close": 166.87
  },
  {
-  "ticker": "GE",
-  "date": "2026-10-19",
-  "close": 311.28
+  "ticker": "XOM",
+  "date": "2026-11-17",
+  "close": 167.21
  },
  {
   "ticker": "GE",
@@ -735,9 +730,9 @@
   "close": 325.18
  },
  {
-  "ticker": "MS",
-  "date": "2026-10-19",
-  "close": 178.47
+  "ticker": "GE",
+  "date": "2026-11-17",
+  "close": 326.4
  },
  {
   "ticker": "MS",
@@ -840,9 +835,9 @@
   "close": 185.57
  },
  {
-  "ticker": "SANM",
-  "date": "2026-10-19",
-  "close": 176.48
+  "ticker": "MS",
+  "date": "2026-11-17",
+  "close": 183.53
  },
  {
   "ticker": "SANM",
@@ -945,9 +940,9 @@
   "close": 153.82
  },
  {
-  "ticker": "FORM",
-  "date": "2026-10-19",
-  "close": 110.16
+  "ticker": "SANM",
+  "date": "2026-11-17",
+  "close": 152.67
  },
  {
   "ticker": "FORM",
@@ -1050,9 +1045,9 @@
   "close": 81.14
  },
  {
-  "ticker": "VTI",
-  "date": "2026-10-19",
-  "close": 375.54
+  "ticker": "FORM",
+  "date": "2026-11-17",
+  "close": 83.03
  },
  {
   "ticker": "VTI",
@@ -1155,9 +1150,9 @@
   "close": 364.3
  },
  {
-  "ticker": "VT",
-  "date": "2026-10-19",
-  "close": 157.11
+  "ticker": "VTI",
+  "date": "2026-11-17",
+  "close": 360.19
  },
  {
   "ticker": "VT",
@@ -1258,5 +1253,10 @@
   "ticker": "VT",
   "date": "2026-11-16",
   "close": 152.36
+ },
+ {
+  "ticker": "VT",
+  "date": "2026-11-17",
+  "close": 150.65
  }
 ]
