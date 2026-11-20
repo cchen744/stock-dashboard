@@ -106,11 +106,6 @@
  },
  {
   "ticker": "ANET",
-  "date": "2026-10-21",
-  "close": 184.33
- },
- {
-  "ticker": "ANET",
   "date": "2026-10-22",
   "close": 171.07
  },
@@ -208,6 +203,11 @@
   "ticker": "ANET",
   "date": "2026-11-18",
   "close": 193.94
+ },
+ {
+  "ticker": "ANET",
+  "date": "2026-11-19",
+  "close": 189.59
  },
  {
   "ticker": "MU",
