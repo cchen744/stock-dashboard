@@ -1,9 +1,9 @@
 [
  {
   "item": "纳斯达克综合",
-  "value": 22618,
+  "value": 23734,
   "unit": "点",
-  "chg_pct": -5.28,
+  "chg_pct": -1.48,
   "note": "较高点回撤超 10%，进入修正",
   "links": [
    {
@@ -18,9 +18,9 @@
  },
  {
   "item": "标普 500",
-  "value": 6910,
+  "value": 7201,
   "unit": "点",
-  "chg_pct": -3.7,
+  "chg_pct": -0.5,
   "note": "2025 年 4 月以来最差单日",
   "links": [
    {
@@ -35,9 +35,9 @@
  },
  {
   "item": "道琼斯",
-  "value": 48147,
+  "value": 50019,
   "unit": "点",
-  "chg_pct": -1.93,
+  "chg_pct": 0.85,
   "note": "",
   "links": [
    {
@@ -48,7 +48,7 @@
  },
  {
   "item": "10 年期美债",
-  "value": 4.91,
+  "value": 4.9,
   "unit": "%",
   "chg_pct": null,
   "note": "10 月曾短暂突破 5%",
@@ -65,10 +65,10 @@
  },
  {
   "item": "VIX",
-  "value": 35.89,
+  "value": 26.36,
   "unit": "",
   "chg_pct": null,
-  "note": "2026-11-20 收盘",
+  "note": "2026-11-24 收盘",
   "links": [
    {
     "t": "StockTitan：11/5 收盘",
